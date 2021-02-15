@@ -28,7 +28,7 @@
               var html ='';
               $('#example-popover-2-title').html('<b>Avialable Appiontments</b>');
 
-              makeRequest('GET', "http://localhost:8081/trades/getTimeSlots?dayId="+dateText).then(function(data)
+              makeRequest('GET', "https://smallcase-v1.herokuapp.com/trades/getTimeSlots?dayId="+dateText).then(function(data)
               {
                   results=JSON.parse(data);   
                   
