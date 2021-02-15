@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>My Evo Calendar</title>
+    <link type="text/css" rel="stylesheet" href="/evo-calendar.css"/>
+  </head>
+  <body>
+
+      <div id="calendar"></div>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
+      
+      <script>
+      // initialize your calendar, once the page's DOM is ready
+      $(document).ready(function() {
+          $('#calendar').evoCalendar()
+
+          var obj = {};
+          
+          $("#calendar").on('selectDate', function(newDate, oldDate) 
+          {
+              if (obj[oldDate]) {
+                  return;
+              }
+
+              var dateText=oldDate
+              var results;
+              var html ='';
+              $('#example-popover-2-title').html('<b>Avialable Appiontments</b>');
+
+              makeRequest('GET', "http://localhost:8081/trades/getTimeSlots?dayId="+dateText).then(function(data)
+              {
+                  results=JSON.parse(data);   
+                  
+                  var cEvents=[];
+                  var arrayLength = results.length;
+
+                  for (var i = 0; i < arrayLength; i++) 
+                  {
+                      cEvents.push(  {
+                          id: '09nk7Ts'+results[i],
+                          name: results[i],
+                          date: dateText,
+                          type: "birthday",
+                          everyYear: true
+                          })
+                      
+                  }
+        
+                  $("#calendar").evoCalendar('addCalendarEvent', cEvents);
+                  obj[oldDate] = 1;
+                  
+              })
+
+      });
+      })
+
+      
+      
+
+  
+
+                  function makeRequest (method, url, data) {
+          return new Promise(function (resolve, reject) {
+              var xhr = new XMLHttpRequest();
+              xhr.open(method, url);
+              xhr.onload = function () {
+              if (this.status >= 200 && this.status < 300) {
+                  resolve(xhr.response);
+              } else {
+                  reject({
+                  status: this.status,
+                  statusText: xhr.statusText
+                  });
+              }
+              };
+              xhr.onerror = function () {
+              reject({
+                  status: this.status,
+                  statusText: xhr.statusText
+              });
+              };
+              if(method=="POST" && data){
+                  xhr.send(data);
+              }else{
+                  xhr.send();
+              }
+          });
+          }
+
+      </script>
+
+
+
+
+  </body>

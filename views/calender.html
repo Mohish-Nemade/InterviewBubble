@@ -1,0 +1,100 @@
+<!-- begin snippet: js hide: false console: true babel: false -->
+<!-- language: lang-html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<style>
+.popover {
+    left: 40% !important;
+}
+.btn {
+    margin: 1%;
+}
+div.popover-content {
+ 
+
+  left: 0px;
+  bottom: 300px;
+  border: 3px solid #73AD21;
+}
+</style>
+</head>
+<body>
+    <div class=" col-md-4" >
+      <div  class="date-picker-2" placeholder="Recipient's username"  id="ttry" aria-describedby="basic-addon2"></div>
+      <span class="relative"  id="example-popover-2"></span> </div>
+    <div  id="example-popover-2-content"  class="hidden"> </div>
+    <div  id="example-popover-2-title" class="hidden"> </div>
+<script>
+$('.date-picker-2').popover({
+    html : true, 
+    content: function() {
+      return $("#example-popover-2-content").html();
+    },
+    title: function() {
+      return $("#example-popover-2-title").html();
+    }
+});
+$(".date-picker-2").datepicker({
+    onSelect: function(dateText) { 
+     //   $(".pop-bottom").popover({placement : 'bottom'});
+        var results;
+        var html =''
+        $('#example-popover-2-title').html('<b>Avialable Appiontments</b>');
+        makeRequest('GET', "http://localhost:8081/trades/getTimeSlots?dayId="+dateText).then(function(data){
+              results=JSON.parse(data);   
+            
+
+           
+            //var str = "ABCDEFG";
+
+            var arrayLength = results.length;
+    for (var i = 0; i < arrayLength; i++) 
+	   {
+               html = html+'<button  class="btn btn-success">'+results[i]+'</button>';
+       }
+              $('#example-popover-2-content').html('Avialable Appiontments On <strong>'+dateText+'</strong><br>'+html);
+        $('.date-picker-2').popover('show');
+    });
+    }
+});
+
+function makeRequest (method, url, data) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText
+        });
+      }
+    };
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText
+      });
+    };
+    if(method=="POST" && data){
+        xhr.send(data);
+    }else{
+        xhr.send();
+    }
+  });
+}
+
+//GET example
+
+
+</script> 
+</body>
+</html>

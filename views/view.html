@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="description" content="A web component for date and time slot picker">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <title>Document</title>
+    <!-- IMPORT THE WEB COMPONENT LIKE THIS -->
+
+    <script src='script.js'></script>
+</head>
+<body>
+    <!-- OUR WEB COMPONENT, PROPERTIES ARE OPTIONAL. -->
+    <datetime-slot-picker 
+      placeholder="View available slots" 
+      time-slots-text="Time Slot"
+      no-slots-text="No slots are available" 
+      >
+    </datetime-slot-picker>
+  
+    <!-- SHOWING ALL OPTIONAL PROPERTIES
+    <datetime-slot-picker 
+      placeholder="Pick a time slot" 
+      time-slots-text="Time"
+      no-slots-text="No slots are available" 
+      language="en"
+      am-pm-disabled
+      dates-hidden-when-times-shown
+      >
+    </datetime-slot-picker>
+    -->
+    
+    
+   <script>
+     const datetimeSlotPicker = document.querySelector('datetime-slot-picker');
+     
+     /* LISTENER FOR DATE AND TIME SLOT CHANGES */
+     datetimeSlotPicker.addEventListener('slotUpdate', function(event){ console.log('Updated Slot: ', event.detail) });
+      
+     /* INITIALIZING THE AVAILABLE SLOTS. TIME SLOTS IS OPTIONAL */
+     var user = JSON.parse(decodeURI("{{res}}"));
+     console.log(user)
+
+     datetimeSlotPicker.slots = user ;
+  </script>
+</body>
+</html>
+
+
+
