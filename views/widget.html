@@ -47,8 +47,11 @@
                       
                   }
         
-                  $("#calendar").evoCalendar('addCalendarEvent', cEvents);
-                  obj[oldDate] = 1;
+                  if(!obj[oldDate])
+                  {
+                        $("#calendar").evoCalendar('addCalendarEvent', cEvents);
+                        obj[oldDate] = 1;
+                  }
                   
               })
 
