@@ -169,7 +169,7 @@ app.get("/repos", async (req, res) => {
         var datetime = new Date();
        // console.log(datetime)
         console.log(formatDate(ts))
-
+/*
         //const url="https://www.picktime.com/book/slots?_="+ts+"&dateAndTime="+formatDate(ts)+"&locationId=478b9f23-567c-4172-a196-6d1a9f9dbd41&duration=45&slot=45&offBooking=false&eventType=appointment&serviceClassId=b735bbf2-5860-4c10-9fab-4916e879df84&accountId=fbe37d3f-f29a-4c86-a144-b5bb131e1b56"
         const url="https://www.picktime.com/book/slots?_="+ts+"&dateAndTime="+formatDate(ts)+"&locationId=478b9f23-567c-4172-a196-6d1a9f9dbd41&duration=45&slot=45&offBooking=false&eventType=appointment&serviceClassId=b735bbf2-5860-4c10-9fab-4916e879df84&accountId=fbe37d3f-f29a-4c86-a144-b5bb131e1b56"
 
@@ -268,10 +268,10 @@ const result1 = await axios.get(
         "date": getStates(ts6),
         "timeSlots": getProp(result6.data.data)
       }]
-
+*/
      
       res.render("widget", {
-        "res" : jsonUtils.encodeJSON(tp)
+        "res" : "jsonUtils.encodeJSON(tp)"
       });
     } catch (error) {
       console.log(error);
