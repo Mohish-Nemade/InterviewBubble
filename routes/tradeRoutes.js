@@ -87,7 +87,7 @@ return d;
 }
 
 
-function getProp(res) {
+function getPropOld(res) {
     
     const timeslots=[];
 
@@ -104,6 +104,50 @@ function getProp(res) {
 return timeslots;
 
 }
+
+function getProp(res) {
+  
+  var time = new Array();
+ 
+
+
+    const timeslots=[];
+
+    var arrayLength = res.length;
+    for (var i = 0; i < arrayLength; i++) {
+
+      var temp=res[i].toString()
+      time.push(parseInt(temp.substring(8,10)+temp.substring(10,12)));
+    }
+    time.sort(function(a, b){return a - b});
+    console.log("time"+time)
+
+    for (var i = 0; i < time.length; i++) {
+
+        var temp=time[i].toString()
+        var len=temp.length
+        console.log("here"+len)
+        if(len==3)
+        {
+             temp= temp.substring(0,1)+":"+temp.substring(1,3)+" am"
+             console.log("here")
+        }
+        else 
+        {    
+          if(parseInt(temp.substring(0,2))>12)
+            temp= (parseInt(temp.substring(0,2))-12).toString()+":"+temp.substring(2,4)+" pm"
+          else  
+            temp= temp.substring(0,2)+":"+temp.substring(2,4)+" am"
+        }
+        console.log("temp"+temp)
+        timeslots.push(temp)        //Do something
+    }
+    //timeslots.push(res[0])
+
+return timeslots;
+
+}
+
 
 function getFormatDate(temp)
 {
